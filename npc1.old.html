@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>SAVER - Single Amino acid Variant EvaluateR</title>
+
+
+	<link rel="stylesheet" href="css/csvtable.css" type="text/css" />
+	<link rel="stylesheet" href="css/headers.css" />
+	<style>
+	.hidden {
+		display:none;
+		}
+	.link{
+		font-size:"28px";
+		} 
+	.link:hover{
+		color:"red";
+		}
+		
+	</style>
+	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+
+	<script type="text/javascript" src="js/jquery.tablesorter.dev.js"></script>
+	<script type="text/javascript" src="http://web.utk.edu/~oadebali/svg_library.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
+	<script type="text/javascript" src="js/jquery.csvToTable_npc1.js"></script>
+	<script>
+
+
+function getResult(switchButton){
+	 $(".heads").show();
+	var aa0 = $("#aa0").val()
+	var aa1 = $("#minbeds").val()
+	var position = $("#amount").val()
+	var mutationString = aa0 + position + aa1;
+	if (switchButton==-1){
+		$(".rows").hide();
+	}
+
+	if (switchButton){
+	$("#" + mutationString).show();
+		}
+	else{
+	$("#" + mutationString).hide();
+	}
+}	
+
+
+	function openTree(){
+		window.open("treelign/treelign.html?f=" + $("#amount").val() + "&newick=NPC1-L1.sn.noGap.fa..phy_phyml_trec.noded.nwk.trueNPC1.distance.nwk.sorted&json=NPC1-L1.sn.TrueNPC1.fa.afa.distance.afa.json&first=gi|255652944&r=25");
+	}
+
+  $(function() {
+
+
+	var seq = "MTARGLALGLLLLLLCPAQVFSQSCVWYGECGIAYGDKRYNCEYSGPPKPLPKDGYDLVQELCPGFFFGNVSLCCDVRQLQTLKDNLQLPLQFLSRCPSCFYNLLNLFCELTCSPRQSQFLNVTATEDYVDPVTNQTKTNVKELQYYVGQSFANAMYNACRDVEAPSSNDKALGLLCGKDADACNATNWIEYMFNKDNGQAPFTITPVFSDFPVHGMEPMNNATKGCDESVDEVTAPCSCQDCSIVCGPKPQPPPPPAPWTILGLDAMYVIMWITYMAFLLVFFGAFFAVWCYRKRYFVSEYTPIDSNIAFSVNASDKGEASCCDPVSAAFEGCLRRLFTRWGSFCVRNPGCVIFFSLVFITACSSGLVFVRVTTNPVDLWSAPSSQARLEKEYFDQHFGPFFRTEQLIIRAPLTDKHIYQPYPSGADVPFGPPLDIQILHQVLDLQIAIENITASYDNETVTLQDICLAPLSPYNTNCTILSVLNYFQNSHSVLDHKKGDDFFVYADYHTHFLYCVRAPASLNDTSLLHDPCLGTFGGPVFPWLVLGGYDDQNYNNATALVITFPVNNYYNDTEKLQRAQAWEKEFINFVKNYKNPNLTISFTAERSIEDELNRESDSDVFTVVISYAIMFLYISLALGHMKSCRRLLVDSKVSLGIAGILIVLSSVACSLGVFSYIGLPLTLIVIEVIPFLVLAVGVDNIFILVQAYQRDERLQGETLDQQLGRVLGEVAPSMFLSSFSETVAFFLGALSVMPAVHTFSLFAGLAVFIDFLLQITCFVSLLGLDIKRQEKNRLDIFCCVRGAEDGTSVQASESCLFRFFKNSYSPLLLKDWMRPIVIAIFVGVLSFSIAVLNKVDIGLDQSLSMPDDSYMVDYFKSISQYLHAGPPVYFVLEEGHDYTSSKGQNMVCGGMGCNNDSLVQQIFNAAQLDNYTRIGFAPSSWIDDYFDWVKPQSSCCRVDNITDQFCNASVVDPACVRCRPLTPEGKQRPQGGDFMRFLPMFLSDNPNPKCGKGGHAAYSSAVNILLGHGTRVGATYFMTYHTVLQTSADFIDALKKARLIASNVTETMGINGSAYRVFPYSVFYVFYEQYLTIIDDTIFNLGVSLGAIFLVTMVLLGCELWSAVIMCATIAMVLVNMFGVMWLWGISLNAVSLVNLVMSCGISVEFCSHITRAFTVSMKGSRVERAEEALAHMGSSVFSGITLTKFGGIVVLAFAKSQIFQIFYFRMYLAMVLLGATHGLIFLPVLLSYIGPSVNKAKSCATEERYKGTERERLLNF"
+
+
+
+    $( "#slider-range-max" ).slider({
+      range: "max",
+      min: 1,
+      max: 1278,
+      value: 1,
+      slide: function( event, ui ) {
+	getResult(0);
+        $( "#amount" ).val( ui.value );
+        $( "#aa0" ).val( seq[ui.value-1] );
+	getResult(1);
+      }
+    });
+    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+    //$( "#aa0" ).val( $( "#slider-range-max" ).slider( "value" ) );
+    $( "#aa0" ).val( seq[0]  );
+
+
+    var select = $( "#minbeds" );
+    var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+      min: 1,
+      max: 20,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+	getResult(0);
+        select[ 0 ].selectedIndex = ui.value - 1;
+
+	getResult(1);
+      }
+    });
+    $( "#minbeds" ).change(function() {
+	getResult(-1);
+      slider.slider( "value", this.selectedIndex + 1 );
+	getResult(1);
+    });
+   
+
+//});
+
+
+
+//	$(function() {
+	//	$.get('test.csv', function(data) {
+	//		$('#CSVSource').html('<pre>' + data + '</pre>');
+	//	});
+		$('#CSVTable').CSVToTable('S2.csv', { loadingImage: 'images/loading.gif', startLine: 0 });
+	//	$.get('test.tsv', function(data) {
+	//		$('#TSVSource').html('<pre>' + data + '</pre>');
+	//	});
+	//	$('#TSVTable').CSVToTable('test.tsv', { loadingText: 'Loading TSV Data...', loadingImage: 'images/loading.gif', startLine: 0, separator: "\t" });
+	//	$('#CSVTable2').CSVToTable('test.csv', { loadingImage: 'images/loading.gif', startLine: 1, headers: ['Album Title', 'Artist Name', 'Price ($USD)'] }).bind("loadComplete",function() { 
+	//		$('#CSVTable2').find('TABLE').tablesorter();
+	//	});;
+
+
+
+
+	});
+
+
+
+
+	</script>
+</head>
+<body>
+
+<h2>SAVER predictions on NPC1 mutations for Niemann-Pick disease type C</h2>
+<p>
+<label for="amount" style="font-size:20px"><b>NPC1 protein position: </b></label>
+  <input type="text" id="amount" readonly style="border:0; font-size:24px; color:#000; font-weight:bold;">
+<br>
+ <label for="aa0" style="font-size:20px"><b>Original amino-acid (AA0): </b></label>
+  <input type="text" id="aa0" readonly style="border:0; font-size:24px; color:#000; font-weight:bold;">
+<div id="slider-range-max" style="margin-top:-30px"></div>
+</p>
+
+<p>
+<form id="reservation">
+  <label for="minbeds" style="font-family: 'Open Sans', sans-serif;font-size:20px"><b>Replacing amino-acid (AA1): </b></label>
+ <select style="border:0; font-size:24px; color:#000; font-weight:bold;" name="minbeds" id="minbeds">
+    <option>A</option>
+    <option>C</option>
+    <option>D</option>
+    <option>E</option>
+    <option>F</option>
+    <option>G</option>
+    <option>H</option>
+    <option>I</option>
+    <option>K</option>
+    <option>L</option>
+    <option>M</option>
+    <option>N</option>
+    <option>P</option>
+    <option>Q</option>
+    <option>R</option>
+    <option>S</option>
+    <option>T</option>
+    <option>V</option>
+    <option>W</option>
+    <option>Y</option>
+  </select>
+</form>
+<br>
+</p>
+
+
+
+<div id="CSVTable"></div>
+
+<div>
+	<br><br>
+	<label onclick="openTree()" class="link heads"><h3><a>View alignment</a><h3></label> 
+	<label onclick="window.open('S2.csv')" class="link heads"><h3><a>Download Full Table</a><h3></label> 
+</div>
+
+<script>$(".link").hide();</script>
+
+<div>
+<p align="right" style="margin-right:10px">
+Copyright &copy; 2015 - <a href="mailto:ogun@utk.edu">Ogun Adebali</a>
+</p>
+</div>
+
+
+</body>
+</html>
