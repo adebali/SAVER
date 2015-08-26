@@ -17,13 +17,21 @@
 	.link:hover{
 		color:"red";
 		}
-		
+	.text {
+		font-family: 'Open Sans', sans-serif;
+		font-size:20px;
+		]
+	.textb {
+		font-family: 'Open Sans', sans-serif;
+		font-size:16px;
+		}
+	.ui-slider-handle { background: red; }
 	</style>
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 
 	<script type="text/javascript" src="js/jquery.tablesorter.dev.js"></script>
 	<script type="text/javascript" src="http://web.utk.edu/~oadebali/svg_library.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
 	<script type="text/javascript" src="js/jquery.csvToTable_npc1.js"></script>
@@ -139,14 +147,19 @@ function getResult(switchButton){
   <input type="text" id="amount" readonly style="border:0; font-size:24px; color:#000; font-weight:bold;">
 <br>
  <label for="aa0" style="font-size:20px"><b>Original amino-acid (AA0): </b></label>
-  <input type="text" id="aa0" readonly style="border:0; font-size:24px; color:#000; font-weight:bold;">
-<div id="slider-range-max" style="margin-top:-30px"></div>
-</p>
 
-<p>
+  <input type="text" id="aa0" readonly style="border:0; font-size:24px; color:#000; font-weight:bold;">
+<br> <label> Slide the button along the NPC1 sequence to select an amino acid position in the protein </label>
+<div id="slider-range-max" class="blue" style="margin-top:-30px;margin-left:10px;background:#E8EDFF"></div>
+
+<br><br>
+ <label style="font-family: 'Open Sans', sans-serif;font-size:16px;"> Slide the button to select amino acid substitution</label>
 <form id="reservation">
-  <label for="minbeds" style="font-family: 'Open Sans', sans-serif;font-size:20px"><b>Replacing amino-acid (AA1): </b></label>
- <select style="border:0; font-size:24px; color:#000; font-weight:bold;" name="minbeds" id="minbeds">
+
+
+<label style="font-family: 'Open Sans', sans-serif;font-size:20px;"><b>Replacing amino-acid (AA1): </b></label>
+<label for="minbeds" style="font-family: 'Open Sans', sans-serif;font-size:20px;margin-left:0px;background:#E8EDFF;"></label>
+ <select style="border:0; font-size:24px; color:#000; font-weight:bold" name="minbeds" id="minbeds">
     <option>A</option>
     <option>C</option>
     <option>D</option>
